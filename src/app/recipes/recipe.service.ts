@@ -1,12 +1,19 @@
 import { Recipe } from './recipe.model';
 import { EventEmitter, Injectable } from '@angular/core';
+import  { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
 @Injectable()
 export class RecipeService{
 
-    recipeSelected= new EventEmitter<Recipe>(); 
+    //recipeSelected= new EventEmitter<Recipe>();
+    //since the above EventEmitter is not Decorated with @Output and not part of the Component which would 
+    //a total different use case and 
+    //so since we simply use that for cross component communication through a service we should replace this with a Subject as well
+    
+    recipeSelected =new Subject<Recipe>();
+
     private recipes: Recipe[]=[
         new Recipe('Tasty Schnitzel',
         'A super-tasty Schnitzel - just awesome!',
