@@ -4,9 +4,10 @@ import { Subject } from 'rxjs';
 
 export class ShoppingListService {
 
-  //ingredientsChanged=new EventEmitter<Ingredient[]>();
-
+ 
   ingredientsChanged = new Subject<Ingredient[]>();
+  startedEditing=new Subject<number>();
+
 
   private ingredients = [] = [
     new Ingredient('Apples', 5),
@@ -31,5 +32,19 @@ export class ShoppingListService {
     this.ingredientsChanged.next(this.ingredients.slice());
     // (...ingredients) three dots is a ES6 spread operator allows you
     // to turn array of elements to list of elements
+  }
+
+  getIngredient(index:number){
+    return this.ingredients[index];
+  }
+
+  updateIngredient(index:number,newIngredient:Ingredient){
+    this.ingredients[index]= newIngredient;
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
+  deleteIngredient(index:number){
+    this.ingredients.splice(index,1);
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 }
